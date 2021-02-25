@@ -3,7 +3,8 @@ namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 
-class UsefulAnnotationTest extends TestCase {
+class UsefulAnnotationTest extends TestCase
+{
     private $value;
 
     /**
@@ -20,7 +21,7 @@ class UsefulAnnotationTest extends TestCase {
     public function runAfterEachTestMethod()
     {
         unset($this->value);
-        
+
     }
 
     public function testAnnotations1()
@@ -30,7 +31,7 @@ class UsefulAnnotationTest extends TestCase {
         $result = $this->value;
         $this->assertEquals($expected, $result);
     }
-    
+
     public function testAnnotation2()
     {
         $this->value++;
