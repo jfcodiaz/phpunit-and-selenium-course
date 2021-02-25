@@ -1,1 +1,0 @@
-C:37:"PHPUnit\Runner\DefaultTestResultCache":246:{a:2:{s:7:"defects";a:2:{s:39:"Tests\Unit\HelloTest::testSayHelloWorld";i:5;s:34:"Tests\Selenium\HelloTest::testHola";i:4;}s:5:"times";a:2:{s:39:"Tests\Unit\HelloTest::testSayHelloWorld";d:0.002;s:34:"Tests\Selenium\HelloTest::testHola";d:1.415;}}}
