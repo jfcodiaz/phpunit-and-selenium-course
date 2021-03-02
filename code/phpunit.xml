@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/8.2/phpunit.xsd"
-         bootstrap="tests/bootstrap.php"
-         executionOrder="depends,defects"
-         forceCoversAnnotation="false"
-         beStrictAboutCoversAnnotation="true"
-         beStrictAboutOutputDuringTests="true"
-         beStrictAboutTodoAnnotatedTests="true"
-         beStrictAboutTestsThatDoNotTestAnything="false"
-         verbose="true">    
+        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/8.2/phpunit.xsd"
+        bootstrap="tests/bootstrap.php"
+        executionOrder="depends,defects"
+        forceCoversAnnotation="false"
+        beStrictAboutCoversAnnotation="true"
+        beStrictAboutOutputDuringTests="true"
+        beStrictAboutTodoAnnotatedTests="true"
+        beStrictAboutTestsThatDoNotTestAnything="false"
+        verbose="true"
+        colors="true"  
+        testdox="true"
+    >    
     <testsuites>
         <testsuite name="functional">
             <directory suffix="Test.php">tests/functional</directory>            
@@ -19,5 +22,13 @@
         <testsuite name="selenium">
             <directory suffix="Test.php">tests/selenium</directory>            
         </testsuite>        
+        <testsuite name="fixtures">
+            <directory suffix="Test.php">tests/fixtures</directory>            
+        </testsuite>   
     </testsuites>
+    <php>
+        <const name="HOST" value="127.0.0.1" />
+        <const name="BASEURL" value="http://localhost:8000" />
+    </php>
+    
 </phpunit>
