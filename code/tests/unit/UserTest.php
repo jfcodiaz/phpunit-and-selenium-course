@@ -35,4 +35,26 @@ class UserTest extends TestCase
         $this->assertSame('Wayne', $user->getLastName());
     }
 
+    public function testValidDataFormat()
+    {
+        $user = new User('bruce', 'wayne');
+        $mockedDb = new class extends Database {
+            public function getEmailAndLastName()
+            {
+                return [
+                   'name' => 'Bruce',
+                   'last_name' => 'Wayne'
+                ];
+            }
+        };
+
+        $setUserClousere = function () use ($mockedDb) {
+            $this->db = $mockedDb;
+        };
+        $executeSetUserClosure = $setUserClousere->bindTo($user, get_class($user));
+        $executeSetUserClosure();
+
+        $this->assertSame('Bruce Wayne', $user->getFullName());
+    }
+
 }
