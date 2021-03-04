@@ -23,4 +23,14 @@ class User
         return sprintf('%s %s', $this->name, $this->last_name);
     }
 
+    private function hashPassword()
+    {
+        return 'password hashed!';
+    }
+
+    protected function protectedHashPassword()
+    {
+        return $this->hashPassword();
+    }
+
 }
