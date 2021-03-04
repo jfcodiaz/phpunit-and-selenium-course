@@ -23,7 +23,13 @@ final class ProductTest extends TestCase
             }
         };
         $product = new Product($session);
-        $this->assertSame('product 1', $product->fetchProductById(1));
+        $product->setLoggerCallable(function () {
+            echo 'Real Logger was no called!';
+        });
+        ob_start();
+        $result = $product->fetchProductById(1);
+        $out = ob_get_clean();
+        $this->assertSame('Real Logger was no called!', $out);
+        $this->assertSame('product 1', $result);
     }
-
 }
