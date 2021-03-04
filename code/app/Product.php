@@ -2,7 +2,7 @@
 
 namespace App;
 
-class Product
+class Product extends ProductAbstract
 {
     public function __construct(SessionInterface $session)
     {
