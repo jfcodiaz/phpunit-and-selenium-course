@@ -2,12 +2,15 @@
 
 namespace Tests\Unit;
 
-use App\Database;
+use App\traits\CustomAssertionTrait;
 use PHPUnit\Framework\TestCase;
+use App\Database;
 use App\User;
 
 class UserTest extends TestCase
 {
+    use CustomAssertionTrait;
+
     public function testValidPrivateUserNameWhithClosuer()
     {
         $user = new User('bruce', 'wayne');
@@ -80,6 +83,16 @@ class UserTest extends TestCase
             }
         };
         $this->assertSame('password hashed!', $user->getHashedPassword());
+    }
+
+    public function testCustomDataStructure()
+    {
+        $data = [
+            'nick' => 'Batman',
+            'email' => 'bruce@wayne.net',
+            'age' => 70
+        ];
+        $this->assertArrayData($data);
     }
 
 }
