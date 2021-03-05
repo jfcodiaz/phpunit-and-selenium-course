@@ -95,4 +95,11 @@ class UserTest extends TestCase
         $this->assertArrayData($data);
     }
 
+    public function testSomeOperation()
+    {
+        $user = new User('bruce', 'wayne');
+        $this->assertEquals('ok!', $user->someOperation([1,2,3]));
+        $this->assertEquals('error', $user->someOperation([0]));
+        $this->assertEquals('ok!', $user->someOperation([1]));
+    }
 }

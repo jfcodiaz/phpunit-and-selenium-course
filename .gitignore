@@ -4,3 +4,4 @@ code/vendor
 code/.bash_history
 code/.phpcs-cache
 code/.phpunit.result.cache
+code/html/coverage-report/

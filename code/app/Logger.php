@@ -1,6 +1,9 @@
 <?php
 namespace App;
 
+/**
+ * @codeCoverageIgnore
+ */
 class Logger
 {
 

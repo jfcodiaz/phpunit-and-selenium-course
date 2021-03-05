@@ -30,5 +30,12 @@
         <const name="HOST" value="127.0.0.1" />
         <const name="BASEURL" value="http://localhost:8000" />
     </php>
-    
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">./app</directory>            
+        </include>
+        <exclude>
+            <file>./app/bootstrap.php</file>
+        </exclude>
+    </coverage>
 </phpunit>

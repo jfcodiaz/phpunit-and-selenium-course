@@ -4,6 +4,9 @@ namespace App;
 
 use App\SessionInterface;
 
+/**
+ * @codeCoverageIgnore
+ */
 class Session implements SessionInterface
 {
     public function open()
