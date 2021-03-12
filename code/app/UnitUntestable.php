@@ -5,23 +5,35 @@ namespace App;
 class UnitUntestable
 {
 
+    private $randomService;
+    private $dataSource;
+
+    public function __construct($randomService, $dataSource)
+    {
+        $this->randomService = $randomService;
+        $this->dataSource = $dataSource;
+    }
+
     public function getRandomQoute()
     {
         $body = 'Today the quote from ';
 
-        $random = mt_rand(0, 2);
+        $random = $this->randomService->__invoke();
         if ($random == 0) {
-            $body .= 'one the famous physicist ' . $person = 'Albert Einstein';
+            $person = 'Albert Einstein';
+            $body .= 'one the famous physicist ';
         } else if ($random == 1) {
-            $body .= 'head of the Catholic Church and sovereign of the Vatican City ' . $person = 'Pope John Paul II';
+            $person = 'Pope John Paul II';
+            $body .= 'head of the Catholic Church and sovereign of the Vatican City ';
         } else if ($random == 2) {
-            $body .= 'the co-founder of Microsoft Corporation ' . $person = 'Bill Gates';
+            $person = 'Bill Gates';
+            $body .= 'the co-founder of Microsoft Corporation ';
         }
 
-        $quotes = new DataSource;
+        $quotes = $this->dataSource;
         $quote = $quotes->fetchQuote($person);
 
-        return $body . ': ' . $quote;
+        return $body . $person . ': ' . $quote;
 
     }
 }
