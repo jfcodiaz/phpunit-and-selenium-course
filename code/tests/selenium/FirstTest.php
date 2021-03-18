@@ -1,16 +1,39 @@
-<?php 
+<?php
 
 namespace Tests\selenium;
 
-use PHPUnit\Extensions\Selenium2TestCase;
+use Facebook\WebDriver\WebDriverBy;
 use Tests\Selenium\SeleniumTestCase;
 
-class FirstTest extends SeleniumTestCase{
+class FirstTest extends SeleniumTestCase
+{
 
-    public function testTitle()
+    public function testTitle() : void
     {
-        $this->url('http://google.com');
-        $this->assertEquals('Google', $this->title());
+        $this->url('http://phpunit_www/elements.html');
+        $this->assertEquals('HTML by Adam Morse, mrmrs.cc', $this->title());
+    }
+
+    public function testGettingElements() : void
+    {
+        $this->url('http://phpunit_www/elements.html');
+        $h1 = $this->byCssSelector('header h1');
+        $this->assertSame('HTML', $h1->getText());
+
+        $arrH1 = (array) $this->getWebDriver()->findElements(WebDriverBy::cssSelector('h1'));
+        $this->assertCount(16, $arrH1);
+        $this->assertStringContainsString('Headings', $arrH1[2]->getText());
+
+        $field = $this->getElementById('first-name');
+        $this->assertSame('Adam', $field->getAttribute('value'));
+
+        $link = $this->getElementById('google-link-id');
+        $this->assertSame('Google', $link->getText());
+
+        $content = $this->getElementByTagName('body')->getText();
+        $this->assertStringContainsString('Every html element in one place. Just waiting to be styled.', $content);
+
+        $this->assertStringContainsString('At vero eos et accusamus', $this->getSource());
     }
 
 }

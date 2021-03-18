@@ -12,10 +12,7 @@ class SeleniumTestCase extends TestCase
 
     private $webDriver = null;
 
-    /**
-     * @return null|RemoteWebDriver
-     */
-    public function getWebDriver()
+    public function getWebDriver() : RemoteWebDriver
     {
         if (null === $this->webDriver) {
             $serverUrl = 'http://selenium-hub:4444';
@@ -28,52 +25,56 @@ class SeleniumTestCase extends TestCase
         return $this->webDriver;
     }
 
-    /**
-     * @param string $url
-     *
-     * @return $this
-     */
-    public function goTo($url)
+    public function goTo(string $url) : SeleniumTestCase
     {
         $this->getWebDriver()->get($url);
         return $this;
     }
 
-    /**
-     * @param string $url
-     * 
-     * @return $this
-     */
-    public function url($url) {
+    public function url(string $url) : SeleniumTestCase
+    {
         $this->goTo($url);
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function title() {
-        return $this->webDriver->getTitle();        
+    public function byCssSelector(string $cssSelector) : RemoteWebElement
+    {
+        return $this->getWebDriver()->findElement(
+            WebDriverBy::cssSelector($cssSelector)
+        );
     }
-    
-    /**
-     * @param int $id
-     *
-     * @return RemoteWebElement
-     */
-    public function getElementById($id)
+
+    public function title() : string
+    {
+        return $this->webDriver->getTitle();
+    }
+
+    public function getElementById(string $id) : RemoteWebElement
     {
         return $this->getWebDriver()->findElement(WebDriverBy::id($id));
     }
 
-    /**
-     *  @return void
-     */
-    protected function tearDown(): void
+    public function getElementByTagName($tagName) : RemoteWebElement
+    {
+        return $this->getWebDriver()->findElement(WebDriverBy::tagName($tagName));
+    }
+
+
+    public function getSource() : string
+    {
+        return $this->getWebDriver()->getPageSource();
+    }
+
+    protected function tearDown() : void
     {
         if (null !== $this->webDriver) {
             $this->webDriver->quit();
             $this->webDriver = null;
         }
+    }
+
+    public function __destruct()
+    {
+        $this->tearDown();
     }
 }
