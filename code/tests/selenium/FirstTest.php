@@ -10,13 +10,13 @@ class FirstTest extends SeleniumTestCase
 
     public function testTitle() : void
     {
-        $this->url('http://phpunit_www/elements.html');
+        $this->url('http://www/elements.html');
         $this->assertEquals('HTML by Adam Morse, mrmrs.cc', $this->title());
     }
 
     public function testGettingElements() : void
     {
-        $this->url('http://phpunit_www/elements.html');
+        $this->url('http://www/elements.html');
         $h1 = $this->byCssSelector('header h1');
         $this->assertSame('HTML', $h1->getText());
 
@@ -33,7 +33,6 @@ class FirstTest extends SeleniumTestCase
         $this->assertEquals('Google', $this->title());
 
         $this->goBack();
-        
 
         $content = $this->getElementByTagName('body')->getText();
         $this->assertStringContainsString('Every html element in one place. Just waiting to be styled.', $content);

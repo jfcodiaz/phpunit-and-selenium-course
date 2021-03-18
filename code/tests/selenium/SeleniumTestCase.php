@@ -5,6 +5,7 @@ use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Facebook\WebDriver\Remote\RemoteWebElement;
 use Facebook\WebDriver\WebDriverBy;
+use Facebook\WebDriver\WebDriverSelect;
 use PHPUnit\Framework\TestCase;
 
 class SeleniumTestCase extends TestCase
@@ -44,6 +45,11 @@ class SeleniumTestCase extends TestCase
         );
     }
 
+    public function getElementByCss($cssSelector) : RemoteWebElement
+    {
+        return $this->byCssSelector($cssSelector);
+    }
+
     public function title() : string
     {
         return $this->webDriver->getTitle();
@@ -59,17 +65,20 @@ class SeleniumTestCase extends TestCase
         return $this->getWebDriver()->findElement(WebDriverBy::tagName($tagName));
     }
 
-    public function goBack() : SeleniumTestCase {
+    public function goBack() : SeleniumTestCase
+    {
         $this->getWebDriver()->navigate()->back();
         return $this;
     }
 
-    public function goForward() : SeleniumTestCase { 
+    public function goForward() : SeleniumTestCase
+    {
         $this->getWebDriver()->navigate()->forward();
         return $this;
     }
 
-    public function refresh() : SeleniumTestCase {
+    public function refresh() : SeleniumTestCase
+    {
         $this->getWebDriver()->navigate()->refresh();
         return $this;
     }
@@ -78,6 +87,71 @@ class SeleniumTestCase extends TestCase
     public function getSource() : string
     {
         return $this->getWebDriver()->getPageSource();
+    }
+
+
+    protected function selectOptionByLabel(
+        string $cssSelector,
+        string $label
+    ) : SeleniumTestCase {
+        $select = $this->getElementByCss($cssSelector);
+        (new WebDriverSelect($select))->selectByVisibleText($label);
+        return $this;
+    }
+
+    protected function getSelectedOption(string $cssSelector)
+    {
+        $select = $this->getElementByCss($cssSelector);
+        return (new WebDriverSelect($select))->getFirstSelectedOption();
+    }
+
+    protected function selectByIndex(
+        string $cssSelector,
+        $index
+    ) : SeleniumTestCase {
+        $select = new WebDriverSelect($this->getElementByCss($cssSelector));
+        $select->selectByIndex($index);
+        return $this;
+    }
+
+    /**
+     * @return <int, RemoteWebElement>
+     */
+    protected function getSelectedOptions(string $cssSelector) : array
+    {
+        $select = $this->getElementByCss($cssSelector);
+        return (new WebDriverSelect($select))->getAllSelectedOptions();
+    }
+
+    protected function clearSelect(string $cssSelector) : SeleniumTestCase
+    {
+        $select = $this->getElementByCss($cssSelector);
+        (new WebDriverSelect($select))->deselectAll();
+        return $this;
+    }
+
+    protected function getElementByName($name) : RemoteWebElement
+    {
+        return $this->getWebDriver()->findElement(WebDriverBy::name($name));
+    }
+
+    protected function fillInput($cssSelector, $value) : SeleniumTestCase
+    {
+        $input = $this->getElementByCss($cssSelector);
+        $input->sendKeys($value);
+        return $this;
+    }
+
+    protected function getElementsByCss($cssSelector)
+    {
+        return $this->getWebDriver()
+            ->findElements(WebDriverBy::cssSelector($cssSelector));
+    }
+
+    protected function clickOnElement($cssSelector) : SeleniumTestCase
+    {
+        $this->getElementByCss($cssSelector)->click();
+        return $this;
     }
 
     protected function tearDown() : void
