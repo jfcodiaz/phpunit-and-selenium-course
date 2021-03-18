@@ -29,10 +29,19 @@ class FirstTest extends SeleniumTestCase
 
         $link = $this->getElementById('google-link-id');
         $this->assertSame('Google', $link->getText());
+        $link->click();
+        $this->assertEquals('Google', $this->title());
+
+        $this->goBack();
+        
 
         $content = $this->getElementByTagName('body')->getText();
         $this->assertStringContainsString('Every html element in one place. Just waiting to be styled.', $content);
 
+        $this->goForward();
+        $this->assertEquals('Google', $this->title());
+        $this->goBack();
+        $this->refresh();
         $this->assertStringContainsString('At vero eos et accusamus', $this->getSource());
     }
 

@@ -59,6 +59,21 @@ class SeleniumTestCase extends TestCase
         return $this->getWebDriver()->findElement(WebDriverBy::tagName($tagName));
     }
 
+    public function goBack() : SeleniumTestCase {
+        $this->getWebDriver()->navigate()->back();
+        return $this;
+    }
+
+    public function goForward() : SeleniumTestCase { 
+        $this->getWebDriver()->navigate()->forward();
+        return $this;
+    }
+
+    public function refresh() : SeleniumTestCase {
+        $this->getWebDriver()->navigate()->refresh();
+        return $this;
+    }
+
 
     public function getSource() : string
     {
