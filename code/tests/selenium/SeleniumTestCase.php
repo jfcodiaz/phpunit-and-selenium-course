@@ -40,6 +40,23 @@ class SeleniumTestCase extends TestCase
     }
 
     /**
+     * @param string $url
+     * 
+     * @return $this
+     */
+    public function url($url) {
+        $this->goTo($url);
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function title() {
+        return $this->webDriver->getTitle();        
+    }
+    
+    /**
      * @param int $id
      *
      * @return RemoteWebElement
