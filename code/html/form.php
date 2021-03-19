@@ -36,7 +36,7 @@
 
           <div>
             <label for="first-name">First Name</label>
-            <input type="text" value="Adam" id="first-name" />
+            <input type="text" value="John" id="first-name" />
           </div>
 
           <div>
@@ -102,6 +102,9 @@
         </fieldset>
       </form>
     </section>
+    <script>
+      setTimeout(function(){ document.getElementById("first-name").value = "Adam"; }, 3000);
+    </script>
   </body>
 </html>
 
