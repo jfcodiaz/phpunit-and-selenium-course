@@ -2,8 +2,8 @@
 
 namespace Tests\selenium;
 
-use Facebook\WebDriver\WebDriverSelect;
 use Tests\Selenium\SeleniumTestCase;
+use Facebook\WebDriver\Cookie;
 
 class HtmlFormsTest extends SeleniumTestCase
 {
@@ -50,6 +50,28 @@ class HtmlFormsTest extends SeleniumTestCase
         $this->assertSame(
             $this->getElementByTagName('textarea')->getText(),
             '{"some_input_name":"Adam","radio":"on"}'
+        );
+    }
+
+
+    public function testWriteReadCookies() : void
+    {
+        $this->url('http://www/form.php');
+
+        $this->assertSame(
+            '[]',
+            $this->getElementById('div-cookies')->getText()
+        );
+        $this->getWebDriver()->manage()->addCookie(new Cookie('key', 'value'));
+
+        $this->refresh();
+
+        $cookie = $this->getWebDriver()->manage()->getCookieNamed('key');
+        $this->assertEquals('value', $cookie->getValue());
+
+        $this->assertSame(
+            '{"key":"value"} key=value',
+            $this->getElementById('div-cookies')->getText()
         );
     }
 }

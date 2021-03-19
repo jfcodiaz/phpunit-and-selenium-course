@@ -33,6 +33,7 @@
     <coverage processUncoveredFiles="true">
         <include>
             <directory suffix=".php">./app</directory>            
+            <directory suffix=".php">./html</directory>
         </include>
         <exclude>
             <file>./app/bootstrap.php</file>

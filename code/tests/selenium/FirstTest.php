@@ -8,15 +8,18 @@ use Tests\Selenium\SeleniumTestCase;
 class FirstTest extends SeleniumTestCase
 {
 
-    public function testTitle() : void
+    public function setUp() : void
     {
         $this->url('http://www/elements.html');
+    }
+
+    public function testTitle() : void
+    {
         $this->assertEquals('HTML by Adam Morse, mrmrs.cc', $this->title());
     }
 
     public function testGettingElements() : void
     {
-        $this->url('http://www/elements.html');
         $h1 = $this->byCssSelector('header h1');
         $this->assertSame('HTML', $h1->getText());
 

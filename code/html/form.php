@@ -4,10 +4,16 @@
   <head>
     <meta charset="utf-8" />
     <title>HTML by Adam Morse, mrmrs.cc</title>
-  </head>
-  <body>
+  </head>  
+  <body onload="showCookie">
     <section>
       <h1 class="other-class">Forms</h1>
+      <div id="div-cookies">
+        <?php echo json_encode($_COOKIE); ?>
+        <script>
+          document.write(document.cookie);
+        </script>
+      </div>
       <form action="form-result.php" method="post">
         <fieldset>
           <!--
