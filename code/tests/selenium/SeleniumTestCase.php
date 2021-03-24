@@ -130,6 +130,11 @@ class SeleniumTestCase extends TestCase
         return $this;
     }
 
+    protected function getElementByXPath($xpath) : RemoteWebElement
+    {
+        return $this->getWebDriver()->findElement(WebDriverBy::XPath($xpath));
+    }
+
     protected function getElementByName($name) : RemoteWebElement
     {
         return $this->getWebDriver()->findElement(WebDriverBy::name($name));
@@ -152,6 +157,12 @@ class SeleniumTestCase extends TestCase
     {
         $this->getElementByCss($cssSelector)->click();
         return $this;
+    }
+
+    protected function getLinkByText($text) : RemoteWebElement
+    {
+        $driver = $this->getWebDriver();
+        return $driver->findElement(WebDriverBy::linkText($text));
     }
 
     protected function tearDown() : void

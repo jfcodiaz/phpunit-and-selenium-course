@@ -4,26 +4,34 @@
       <div class="grid-x grid-margin-x">
         <div class="medium-6 cell">
           <h3>
+            <?php if($editedCategory ?? false): ?>
+            Edit category
+            <?php else: ?>
             Add a new category
+            <?php endif; ?>
           </h3>
-          <!-- <div class="callout success">
-            Category was saved
-          </div> -->
           <?php if($category_deleted ?? false): ?>
           <div class="callout alert">
             Category was deleted
           </div>
           <?php endif; ?>
-          <!-- <div class="callout alert">
+          <?php if(isset($categorySaved) && $categorySaved==false): ?>
+          <div class="callout alert">
             Fill correctly the form
-          </div> -->
+          </div>
+          <?php elseif(isset($categorySaved) && $categorySaved==true):?>
+          <div class="callout success">
+            Category was saved
+          </div>
+          <?php endif; ?>
+          <form action="<?=$baseUrl?>save-category" method="POST">
           <label
             >Name
-            <input type="text" placeholder="Name" />
+            <input type="text" name="category_name" placeholder="Name" value="<?=$editedCategory['name'] ?? null?>" />
           </label>
           <label
             >Description
-            <textarea placeholder="Description"></textarea>
+            <textarea name="category_description" placeholder="Description"></textarea>
           </label>
           <label
             >Parent category
@@ -62,24 +70,28 @@
         <div class="medium-6 large-5 cell large-offset-1">
           <div class="basic-card">
             <div class="basic-card-content content callout secondary">
-              <h5>Computers</h5>
+              <h5><?=$category ?? 'Choose a category from the menu'?></h5>
+              <?php if($category ?? false): ?>
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi
                 saepe, asperiores dolor nesciunt dolore, accusamus minus
                 repellendus vero odio, quibusdam, ipsum nisi in a molestiae ex
                 assumenda nulla eveniet eos!
               </p>
+              <?php endif; ?>
             </div>
+            <?php if($category ?? false): ?>
             <div class="links callout primary">
               <ul class="menu">
                 <li>
-                  <a href="#">Edit</a>
+                  <a href="<?=$baseUrl?>edit-category/1">Edit</a>
                 </li>
                 <li>
-                  <a id="delete-category-confirmation" onclick="return confirm('Are you sure?')" href="delete-category">Delete</a>
+                  <a id="delete-category-confirmation" onclick="return confirm('Are you sure?')" href="<?=$baseUrl?>delete-category/1">Delete</a>
                 </li>
               </ul>
             </div>
+            <?php endif; ?>
           </div>
         </div>
       </div>

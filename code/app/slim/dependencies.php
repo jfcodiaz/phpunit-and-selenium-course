@@ -11,5 +11,7 @@ $container->set('settings', function ($d) {
 });
 
 $container->set('view', function () {
-    return new \Slim\Views\PhpRenderer(__DIR__ . '/views/');
+    return new \Slim\Views\PhpRenderer(__DIR__ . '/views/', [
+        'baseUrl' => '/slim/'
+    ]);
 });
