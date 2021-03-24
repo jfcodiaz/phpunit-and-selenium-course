@@ -1,97 +1,89 @@
 <?php
-
-namespace Tests\Unit;
-
 use App\slim\Services\CategoryTree;
-use PHPUnit\Framework\TestCase;
 
-class CategoryTreeTest extends TestCase
+class CategoryTreeTest extends PHPUnit\Framework\TestCase
 {
 
-    public function testCanConvertDatabaseResultToCategoryArray()
+    protected $category_tree;
+
+    public function setUp() : void
     {
-        $tree = new CategoryTree();
-
-        $db_result = [
-             ['id' => 1, 'name' => 'Electronics', 'parent_id' => null],
-             ['id' => 2, 'name' => 'Videos', 'parent_id' => null],
-             ['id' => 3, 'name' => 'Software', 'parent_id' => null]
-        ];
-
-        $after_conversion = [
-             ['id' => 1, 'name' => 'Electronics', 'parent_id' => null, 'children' => []],
-             ['id' => 2, 'name' => 'Videos', 'parent_id' => null, 'children' => []],
-             ['id' => 3, 'name' => 'Software', 'parent_id' => null, 'children' => []]
-        ];
-
-         $this->assertEquals($after_conversion, $tree->convert($db_result));
-
+        $this->category_tree = new CategoryTree();
     }
 
-    public function testCanConvertDatabaseResultToOneLevelNestedArray()
+    /**
+     * @dataProvider arrayProvider
+     */
+    public function testCanConvertDatabaseResultToCategoryNestedArray($after_conversion, $db_result)
     {
-        $tree = new CategoryTree();
-
-        $db_result = [
-             ['id' => 1, 'name' => 'Electronics', 'parent_id' => null],
-             ['id' => 2, 'name' => 'Computers', 'parent_id' => 1]
-        ];
-
-        $after_conversion = [
-             [
-                 'id' => 1,
-                 'name' => 'Electronics',
-                 'parent_id' => null,
-                 'children' => [
-                         [
-                             'id' => 2,
-                             'name' => 'Computers',
-                             'parent_id' => 1,
-                             'children' => []
-                         ]
-                     ]
-             ]
-        ];
-
-         $this->assertEquals($after_conversion, $tree->convert($db_result));
-
+        $this->assertEquals($after_conversion, $this->category_tree->convert($db_result));
     }
 
-    public function testCanConvertDatabaseResultToTwoLevelNestedArray()
+    public function arrayProvider()
     {
-        $tree = new CategoryTree();
-        $db_result = [
-             ['id' => 1, 'name' => 'Electronics', 'parent_id' => null],
-             ['id' => 2, 'name' => 'Computers', 'parent_id' => 1],
-             ['id' => 3, 'name' => 'Laptops', 'parent_id' => 2],
+        return [
+            'one level' => [
+                [
+                    ['id' => 1, 'name' => 'Electronics', 'parent_id' => null, 'children' => []],
+                    ['id' => 2, 'name' => 'Videos', 'parent_id' => null, 'children' => []],
+                    ['id' => 3, 'name' => 'Software', 'parent_id' => null, 'children' => []]
+                ],
+                [
+                    ['id' => 1, 'name' => 'Electronics', 'parent_id' => null],
+                    ['id' => 2, 'name' => 'Videos', 'parent_id' => null],
+                    ['id' => 3, 'name' => 'Software', 'parent_id' => null]
+                ],
+            ],
+            'two level' => [
+                [
+                    [
+                    'id' => 1,
+                    'name' => 'Electronics',
+                    'parent_id' => null,
+                    'children' => [
+                            [
+                                'id' => 2,
+                                'name' => 'Computers',
+                                'parent_id' => 1,
+                                'children' => []
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    ['id' => 1, 'name' => 'Electronics', 'parent_id' => null],
+                    ['id' => 2, 'name' => 'Computers', 'parent_id' => 1]
+                ],
+            ],
+            'three level' => [
+                [
+                    [
+                    'id' => 1,
+                    'name' => 'Electronics',
+                    'parent_id' => null,
+                    'children' => [
+                            [
+                                'id' => 2,
+                                'name' => 'Computers',
+                                'parent_id' => 1,
+                                'children' => [
+                                        [
+                                            'id' => 3,
+                                            'name' => 'Laptops',
+                                            'parent_id' => 2,
+                                            'children' => []
+                                        ]
+                                    ]
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    ['id' => 1, 'name' => 'Electronics', 'parent_id' => null],
+                    ['id' => 2, 'name' => 'Computers', 'parent_id' => 1],
+                    ['id' => 3, 'name' => 'Laptops', 'parent_id' => 2],
+                ],
+            ],
         ];
-
-        $after_conversion = [
-             [
-                 'id' => 1,
-                 'name' => 'Electronics',
-                 'parent_id' => null,
-                 'children' => [
-                         [
-                             'id' => 2,
-                             'name' => 'Computers',
-                             'parent_id' => 1,
-                             'children' => [
-                                     [
-                                         'id' => 3,
-                                         'name' => 'Laptops',
-                                         'parent_id' => 2,
-                                         'children' => []
-                                     ]
-                                 ]
-                         ]
-                     ]
-             ]
-        ];
-
-         $this->assertEquals($after_conversion, $tree->convert($db_result));
-
     }
-
-
 }
