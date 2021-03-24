@@ -3,6 +3,7 @@ namespace App\slim\Services;
 
 class CategoryTree
 {
+    public $categorylist;
 
     public function convert(array $db_array, int $parent_id = null): array
     {
